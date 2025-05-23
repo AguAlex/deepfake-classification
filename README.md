@@ -66,9 +66,3 @@ pip install tensorflow pandas numpy scikit-learn
 - **Add more augmentation techniques** (rotation, zoom, etc.) to improve robustness.
 - **Implement early stopping** or learning rate schedules to optimize training.
 - **Experiment with other architectures** like EfficientNet or ResNet.
-
----
-
-## License
-
-This project is open-source and free to use for educational and research purposes.
