@@ -1,68 +1,73 @@
-# Image Classification with TensorFlow and MobileNetV2
+# 📸 Deepfake Classification Challenge
 
-## Project Overview
+## 🔍 Overview
 
-This project demonstrates how to build, train, and deploy an image classification model using TensorFlow and the MobileNetV2 architecture. It utilizes transfer learning to efficiently classify images into five categories. The pipeline includes data preprocessing, augmentation, model training, validation, and prediction on unseen test data.
-
----
-
-## Features
-
-- **Custom dataset loading**: Reads image paths and labels from CSV files.
-- **Data augmentation**: Applies random horizontal flips to increase training data diversity.
-- **Transfer learning**: Uses MobileNetV2 pretrained on ImageNet as a feature extractor.
-- **Fine-tuning**: Adds custom dense layers and trains only the classifier head.
-- **Efficient training and validation**: Uses `ImageDataGenerator` for streamlined data input.
-- **Test prediction and submission**: Generates predictions on test images and prepares a submission CSV.
+This project explores multiple machine learning approaches to solve an image classification task. The goal was to compare traditional models with deep learning architectures and optimize performance through preprocessing, feature extraction, and hyperparameter tuning.
 
 ---
 
-## Setup
+## 🚀 Approaches Implemented
 
-### Requirements
+### 1. 🔧 Fine-tuning a Pretrained Model
 
-- Python 3.x
-- TensorFlow 2.x
-- pandas
-- numpy
-- scikit-learn
+- Used a pretrained deep learning model and fine-tuned it on our dataset.
+- Achieved **80.13%** accuracy on the validation set.
 
-You can install dependencies using:
+### 2. ⚙️ Support Vector Machine (SVM)
 
-```bash
-pip install tensorflow pandas numpy scikit-learn
-```
+- Tested both linear and RBF kernels.
+- Linear kernel accuracy: **43.33%**
+- RBF kernel accuracy (with hyperparameter tuning): **64%**
+- Used color histograms as feature input.
 
----
+### 3. 👥 K-Nearest Neighbors (K-NN)
 
-## Usage
+- Tested various values of K with Euclidean distance.
+- Best accuracy: **30.93%**
+- Used color histograms as feature input.
 
-1. **Prepare your data**  
-   Organize your images in folders (e.g., `data/train`, `data/validation`, `data/test`) and prepare CSV files (`train.csv`, `validation.csv`, `test.csv`) with columns:
+### 4. 🧠 Convolutional Neural Networks (CNN)
 
-   - `image_id` (filename without extension)
-   - `label` (integer class label, except for test where label is dummy)
-
-2. **Run the notebook/script**  
-   Execute the Jupyter Notebook or Python script to train the model and generate predictions.
-
-3. **Output**  
-   The script will save a `submission.csv` file with predicted labels for the test set, ready for evaluation or submission.
+- Basic CNN model reached **80.2%** accuracy.
+- Optimized CNN model (improved augmentation and architecture) achieved **85.4%** accuracy.
+  ![Color Histogram](images/cnn3_acc.png)
+  ![Color Histogram](images/cnn3_loss.png)
 
 ---
 
-## Code Structure
+## 🧹 Data Preprocessing & Feature Extraction
 
-- **Data loading and preprocessing**: Reads CSVs, builds file paths, creates data generators with augmentation.
-- **Model construction**: Loads MobileNetV2 without the top layer, adds pooling and dense layers.
-- **Training loop**: Compiles and trains the model using the training and validation data.
-- **Prediction and export**: Runs inference on the test data and saves predictions.
+- Images normalized to [0,1].
+- Data augmentation applied for CNN models (random rotations, flips, zoom, shifts).
+- Extracted color histograms for classical models (SVM, K-NN).
 
 ---
 
-## Future Improvements
+## ⚙️ Hyperparameter Tuning
 
-- **Fine-tune the base model layers** for potentially better accuracy.
-- **Add more augmentation techniques** (rotation, zoom, etc.) to improve robustness.
-- **Implement early stopping** or learning rate schedules to optimize training.
-- **Experiment with other architectures** like EfficientNet or ResNet.
+- **SVM**: Grid search on C and gamma for RBF kernel.
+- **CNN**: Tuning learning rate, batch size, number of layers, dropout rate, and augmentation parameters.
+
+| Model         | Hyperparameters                      | Accuracy |
+| ------------- | ------------------------------------ | -------- |
+| SVM (RBF)     | C=10, gamma=0.01                     | 64%      |
+| SVM (Linear)  | Default                              | 43.33%   |
+| CNN Basic     | LR=0.001, Batch size=32              | 80.2%    |
+| CNN Optimized | LR=0.0001, Dropout=0.3, Augmentation | 85.4%    |
+
+---
+
+## 📊 Results
+
+- CNN models significantly outperformed classical models.
+- Optimized CNN showed the best overall performance.
+- Confusion matrices show reduced misclassification for CNN models.
+
+---
+
+## 📁 Files Included
+
+- Python scripts implementing all models (fine-tuning, SVM, K-NN, CNN).
+- Data preprocessing and augmentation scripts.
+- Diagrams illustrating CNN architectures and training curves.
+- This README and the project report (`Agusoaei_Alexandru_233_doc.PDF`).
